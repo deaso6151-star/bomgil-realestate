@@ -1,0 +1,8 @@
+# 홈페이지 파일만 올려요. 실습자료 원본과 개인·비밀 파일은 올리지 않아요.
+/*
+!/.gitignore
+!/README.md
+!/index.html
+!/images/
+/images/*
+!/images/*.png

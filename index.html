@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>봄길부동산 (교육용 가상 자료)</title>
+<meta name="description" content="AI 활용 교육용 가상 부동산 홈페이지예요. 실제 회사·매물이 아니에요.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* 봄길부동산 브랜드 색 (회사소개.md) — 평평한 색 바탕만 사용 */
+  :root {
+    --green: #2F7D4F;
+    --green-deep: #1F5C39;
+    --sprout: #A8D5A2;
+    --sprout-tint: #E6F1E2;
+    --ivory: #FFF8E7;
+    --cream: #F6EDD6;
+    --paper: #FFFFFF;
+    --ink: #26302A;
+    --ink-soft: #4F5B53;
+    --line: #E3D9BF;
+    --note: #FFE9A8;
+    --note-ink: #5A4300;
+
+    --serif: "Gowun Batang", "Batang", serif;
+    --sans: "Noto Sans KR", "Malgun Gothic", "맑은 고딕", system-ui, sans-serif;
+
+    /* 제목 크기 한 줄 체계 */
+    --h1: clamp(2.25rem, 5.4vw, 4.25rem);
+    --h2: clamp(1.75rem, 3.4vw, 2.75rem);
+    --h3: 1.25rem;
+
+    --edge: clamp(16px, 4vw, 48px);
+    --max: 1240px;
+    --r: 4px;
+    --bar: 64px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--bar) + 40px); -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--ivory); color: var(--ink);
+    font: 400 16px/1.7 var(--sans);
+    word-break: keep-all; overflow-wrap: anywhere;
+  }
+  img { display: block; max-width: 100%; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.25; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: var(--h2); }
+  h3 { font-size: var(--h3); }
+  p { margin: 0; }
+  a { color: inherit; }
+  .wrap { width: 100%; max-width: calc(var(--max) + var(--edge) * 2); margin: 0 auto; padding: 0 var(--edge); }
+  .vtag {
+    display: inline-block; font: 700 12px/1 var(--sans); letter-spacing: .02em;
+    padding: 6px 9px; border-radius: 999px; background: var(--note); color: var(--note-ink); white-space: nowrap;
+  }
+  .kicker { font: 700 14px/1.4 var(--sans); color: var(--green); letter-spacing: .04em; }
+
+  /* 버튼: 한 가지 모양 */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 52px; padding: 0 26px; border-radius: var(--r);
+    background: var(--green); color: #fff; border: 0;
+    font: 700 16px/1 var(--sans); text-decoration: none; cursor: pointer;
+    transition: transform .15s ease, background-color .15s ease;
+  }
+  .btn:hover { background: var(--green-deep); transform: translateY(-1px); }
+  .btn:active { transform: translateY(1px); }
+  .btn .arr { transition: transform .15s ease; }
+  .btn:hover .arr { transform: translateX(3px); }
+  :focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+
+  /* 밑줄이 그려지는 글자 링크 */
+  .uline { text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; transition: background-size .25s ease; padding-bottom: 2px; }
+  .uline:hover { background-size: 100% 2px; }
+
+  /* 맨 위 안내띠 + 머리말 */
+  .notice { background: var(--note); color: var(--note-ink); font: 600 13px/1.5 var(--sans); text-align: center; padding: 8px var(--edge); }
+  .site-head { position: sticky; top: 0; z-index: 30; background: var(--ivory); border-bottom: 1px solid var(--line); }
+  .site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: var(--bar); }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 21px/1 var(--serif); color: var(--green); }
+  .brand svg { width: 26px; height: 26px; }
+  .menu { display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; }
+  .menu a { font: 500 15px/1 var(--sans); }
+  .menu-btn { display: none; }
+  @media (max-width: 820px) {
+    .site-head nav { position: absolute; }
+    .menu-btn {
+      display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px;
+      border: 1px solid var(--line); border-radius: var(--r); background: var(--paper);
+      font: 700 15px/1 var(--sans); color: var(--ink); cursor: pointer;
+    }
+    .menu {
+      position: fixed; inset: 0; z-index: 40; background: var(--ivory);
+      flex-direction: column; gap: 0; padding: 96px var(--edge) 32px; display: none;
+    }
+    .menu.open { display: flex; }
+    .menu li { border-bottom: 1px solid var(--line); }
+    .menu a { display: block; padding: 22px 0; font: 700 24px/1.2 var(--serif); }
+    .menu-close { position: absolute; top: 16px; right: var(--edge); }
+  }
+  @media (min-width: 821px) { .menu-close { display: none; } }
+
+  /* 첫 화면: 동네 사진이 화면을 가득 채움 */
+  .hero { position: relative; min-height: calc(100svh - var(--bar) - 37px); display: flex; align-items: flex-end; color: #fff; overflow: hidden; background: var(--green-deep); }
+  .hero > img { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; }
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(18,40,27,.05) 20%, rgba(18,40,27,.82) 100%), linear-gradient(90deg, rgba(18,40,27,.7), rgba(18,40,27,0) 70%); }
+  .hero .wrap { position: relative; z-index: 2; padding-top: 48px; padding-bottom: clamp(40px, 8vh, 88px); }
+  .hero .vtag { margin-bottom: 20px; }
+  .hero .slogan { font: 700 15px/1.4 var(--sans); color: var(--sprout); margin-bottom: 14px; }
+  .hero h1 { font-size: var(--h1); max-width: 13em; }
+  .hero .lead { font-size: clamp(16px, 1.6vw, 19px); max-width: 32em; margin: 20px 0 32px; color: #F2F6F0; }
+  .hero .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+  .hero .actions .uline { font-weight: 700; }
+
+  /* 공통 섹션 */
+  section.block { padding: clamp(72px, 11vh, 128px) 0; }
+  .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+  .head .kicker { margin-bottom: 12px; }
+  .head p.sub { color: var(--ink-soft); max-width: 34em; margin-top: 12px; }
+
+  /* 회사 소개: 정사각 사진 + 글 */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .sq { aspect-ratio: 1 / 1; overflow: hidden; border-radius: var(--r); background: var(--cream); }
+  .sq img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+  .about-text h2 { margin: 12px 0 24px; }
+  .about-text .body p + p { margin-top: 12px; }
+  .about-text .body { font-size: 17px; }
+  .greet { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .greet blockquote { margin: 0; font: 400 19px/1.75 var(--serif); }
+  .greet .who { margin-top: 14px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+
+  /* 서비스 · 강점: 두 줄 목록 */
+  #services { background: var(--paper); }
+  .lists { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); }
+  .lists h3 { font-size: var(--h3); padding-bottom: 16px; border-bottom: 2px solid var(--ink); }
+  .lists ol { list-style: none; margin: 0; padding: 0; }
+  .lists li { display: grid; grid-template-columns: 56px 1fr; gap: 8px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .lists .n { font: 700 28px/1 var(--serif); color: var(--green); }
+  .lists strong { display: block; font-size: 18px; margin-bottom: 4px; }
+  .lists span.d { color: var(--ink-soft); font-size: 16px; }
+
+  /* 매물 */
+  .filters { display: grid; gap: 14px; margin-bottom: 28px; }
+  .frow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .frow .lab { font-weight: 700; width: 44px; flex: none; }
+  .seg { display: inline-flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    min-height: 44px; padding: 0 18px; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+    font: 500 15px/1 var(--sans); transition: border-color .15s ease, background-color .15s ease;
+  }
+  .chip:hover { border-color: var(--green); }
+  .chip[aria-pressed="true"] { background: var(--sprout); border-color: var(--green); color: var(--green-deep); font-weight: 700; }
+  .rbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 0; border-top: 1px solid var(--line); margin-bottom: 28px; color: var(--ink-soft); }
+  .rbar b { color: var(--ink); }
+  .reset { background: none; border: 0; color: var(--green); font: 700 15px/1 var(--sans); cursor: pointer; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; transition: transform .2s ease, box-shadow .2s ease; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(38,48,42,.08); }
+  .card:hover .sq img { transform: scale(1.03); }
+  .card .sq { position: relative; border-radius: 0; }
+  .card .sq .vtag { position: absolute; left: 12px; top: 12px; }
+  .card .info { padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .meta { display: flex; gap: 8px; align-items: center; font: 700 13px/1 var(--sans); }
+  .meta .t { color: var(--ink-soft); }
+  .meta .d { padding: 5px 9px; border-radius: 999px; }
+  .d-매매 { background: var(--green); color: #fff; }
+  .d-전세 { background: var(--sprout); color: var(--green-deep); }
+  .d-월세 { background: var(--note); color: var(--note-ink); }
+  .card h3 { font-size: 20px; }
+  .price { font: 700 22px/1.3 var(--sans); color: var(--green-deep); }
+  .specs { display: grid; grid-template-columns: 72px 1fr; gap: 4px 12px; margin: 4px 0 0; font-size: 15px; }
+  .specs dt { color: var(--ink-soft); }
+  .specs dd { margin: 0; }
+  .feat { margin-top: 6px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 16px; }
+  .cid { margin-top: auto; padding-top: 8px; font-size: 13px; color: var(--ink-soft); }
+  .empty { padding: 56px var(--edge); text-align: center; border: 1px dashed var(--line); border-radius: var(--r); background: var(--paper); }
+  .empty p + p { margin-top: 6px; color: var(--ink-soft); }
+
+  /* 오시는 길 */
+  #location { background: var(--green-deep); color: #fff; }
+  #location .kicker { color: var(--sprout); }
+  .loc { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .addr { font: 700 clamp(26px, 3.2vw, 40px)/1.35 var(--serif); margin: 12px 0 10px; }
+  .loc .note { color: #CFE3CC; font-size: 15px; }
+  .hours { margin-top: 36px; border-top: 1px solid rgba(255,255,255,.25); }
+  .hours div { display: grid; grid-template-columns: 96px 1fr; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.25); font-size: 16px; }
+  .hours dt { color: var(--sprout); font-weight: 700; }
+  .hours dd { margin: 0; }
+  .way { margin-top: 24px; font-size: 16px; color: #E6F1E2; }
+  .loc .sq img { object-position: 30% 70%; }
+  #location .vtag { margin-top: 16px; }
+
+  /* 문의 안내 */
+  .contact { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); }
+  .clist { margin: 0; border-top: 2px solid var(--ink); }
+  .clist div { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .clist dt { font-weight: 700; color: var(--ink-soft); font-size: 14px; margin-bottom: 4px; }
+  .clist dd { margin: 0; font: 700 22px/1.4 var(--sans); }
+  .clist dd small { display: block; font: 400 14px/1.5 var(--sans); color: var(--ink-soft); margin-top: 2px; }
+  .prep h3 { padding-bottom: 16px; border-bottom: 2px solid var(--ink); }
+  .prep ol { margin: 0; padding: 0; list-style: none; counter-reset: p; }
+  .prep li { counter-increment: p; display: grid; grid-template-columns: 40px 1fr; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .prep li::before { content: counter(p); font: 700 20px/1.4 var(--serif); color: var(--green); }
+  .warn { margin-top: 48px; padding: 22px 24px; background: var(--note); color: var(--note-ink); border-radius: var(--r); font-weight: 600; }
+
+  footer { background: var(--ink); color: #DCE4DD; padding: 48px 0 calc(48px + env(safe-area-inset-bottom)); font-size: 14px; }
+  footer .big { font: 700 20px/1.4 var(--serif); color: #fff; margin-bottom: 12px; }
+  footer p + p { margin-top: 4px; }
+  footer .dim { color: #A9B6AC; }
+
+  /* 휴대폰 아래 고정 바 (화면 이동만, 전화 연결 없음) */
+  .phonebar { display: none; }
+
+  @media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+  @media (max-width: 820px) {
+    .about, .lists, .loc, .contact { grid-template-columns: 1fr; }
+    .about-text { order: -1; }
+    .loc .sq { aspect-ratio: 4 / 3; }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .hero .actions .btn { width: 100%; }
+    .hero .actions { gap: 18px; }
+    .head { margin-bottom: 32px; }
+    .phonebar {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 25;
+      padding: 10px var(--edge) calc(10px + env(safe-area-inset-bottom));
+      background: var(--ivory); border-top: 1px solid var(--line);
+    }
+    .phonebar .btn { width: 100%; min-height: 48px; padding: 0 12px; }
+    .phonebar .btn.alt { background: var(--paper); color: var(--green-deep); border: 1px solid var(--green); }
+    footer { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="notice" role="note">⚠ 이 홈페이지의 회사·사람·번호·주소·매물·사진은 모두 <b>교육용 가상 자료</b>예요. 실제 회사·매물이 아니며 연락하거나 찾아갈 수 없어요.</div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="봄길부동산 처음으로">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 13 14 4l11 9v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z" fill="#2F7D4F"/><path d="M14 23c0-4.5 2.2-7.6 5.6-8.6-.9 4.4-2.4 6.8-5.6 8.6Zm0 0c0-3.4-1.6-5.6-4.4-6.6.6 3.4 1.7 5.5 4.4 6.6Z" fill="#A8D5A2"/></svg>
+      봄길부동산
+    </a>
+    <button class="menu-btn" id="menuOpen" aria-controls="menu" aria-expanded="false">메뉴</button>
+    <nav aria-label="주요 메뉴">
+      <ul class="menu" id="menu">
+        <li><a class="uline" href="#about">회사 소개</a></li>
+        <li><a class="uline" href="#services">서비스</a></li>
+        <li><a class="uline" href="#listings">매물 보기</a></li>
+        <li><a class="uline" href="#location">오시는 길</a></li>
+        <li><a class="uline" href="#contact">문의 안내</a></li>
+        <li class="menu-close"><button class="menu-btn" id="menuClose">닫기</button></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-label="첫 화면">
+    <img src="images/hero-neighborhood.png" alt="봄꽃이 핀 아파트 단지와 산책로 (AI가 만든 예시 사진)" width="1672" height="941" fetchpriority="high">
+    <div class="wrap">
+      <span class="vtag">교육용 가상 자료 · 실제 업체 아님</span>
+      <p class="slogan">내게 맞는 공간, 봄길에서 만나요.</p>
+      <h1>봄길구에서 집과 가게 자리를 찾는 이웃의 동네 부동산</h1>
+      <p class="lead">아파트·오피스텔·상가의 매매·전세·월세를 좋은 점과 꼭 확인할 점까지 쉬운 말로 알려 드려요.</p>
+      <div class="actions">
+        <a class="btn" href="#listings">매물 둘러보기 <span class="arr" aria-hidden="true">→</span></a>
+        <a class="uline" href="#about">봄길부동산 알아보기</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap about">
+      <div class="sq"><img src="images/apartment.png" alt="밝은 아파트 거실 (AI가 만든 예시 사진)" loading="lazy" width="1536" height="1024"></div>
+      <div class="about-text">
+        <p class="kicker">회사 소개</p>
+        <h2>처음 집을 구해도<br>알기 쉽게</h2>
+        <div class="body">
+          <p>봄길부동산은 봄길구 동네에서 집과 가게를 찾는 이웃을 돕는 작은 부동산이에요.</p>
+          <p>매물의 좋은 점과 꼭 확인할 점을 함께 알려 드려요.</p>
+        </div>
+        <div class="greet">
+          <blockquote>“집과 가게는 하루의 대부분을 보내는 곳이라 신중하게 골라야 해요. 처음 오신 분도 편하게 물어보실 수 있도록 천천히, 쉬운 말로 안내하겠습니다.”</blockquote>
+          <p class="who">대표 김봄길 <span class="vtag">가상 인물</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="services">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="kicker">서비스와 강점</p>
+          <h2>이런 일을 도와드려요</h2>
+        </div>
+      </div>
+      <div class="lists">
+        <div>
+          <h3>서비스 3가지</h3>
+          <ol>
+            <li><span class="n">01</span><div><strong>집 구하기 상담</strong><span class="d">아파트·오피스텔의 매매·전세·월세를 예산과 생활에 맞춰 함께 골라요.</span></div></li>
+            <li><span class="n">02</span><div><strong>가게 자리 찾기</strong><span class="d">작은 가게·공방·학원에 맞는 상가 자리를 동네 흐름과 함께 안내해요.</span></div></li>
+            <li><span class="n">03</span><div><strong>계약 전 확인 도움</strong><span class="d">계약 전에 살펴볼 서류와 순서를 쉬운 말로 정리해 드려요.</span></div></li>
+          </ol>
+        </div>
+        <div>
+          <h3>강점 3가지</h3>
+          <ol>
+            <li><span class="n">01</span><div><strong>동네를 잘 알아요</strong><span class="d">봄길구 골목과 생활 정보를 바탕으로 설명해요.</span></div></li>
+            <li><span class="n">02</span><div><strong>쉬운 말로 설명해요</strong><span class="d">어려운 부동산 말은 풀어서 알려 드려요.</span></div></li>
+            <li><span class="n">03</span><div><strong>좋은 점과 확인할 점을 함께</strong><span class="d">장점만 말하지 않고 꼭 볼 점도 같이 알려 드려요.</span></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="listings">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="kicker">매물 보기</p>
+          <h2>지금 소개하는 매물</h2>
+          <p class="sub">거래와 유형을 골라 원하는 매물만 볼 수 있어요.</p>
+        </div>
+        <span class="vtag">모두 교육용 가상 매물 · 사진은 AI 예시</span>
+      </div>
+
+      <div class="filters">
+        <div class="frow" role="group" aria-label="거래 방식 고르기">
+          <span class="lab">거래</span>
+          <div class="seg">
+            <button class="chip" data-g="deal" data-v="전체" aria-pressed="true">전체</button>
+            <button class="chip" data-g="deal" data-v="매매" aria-pressed="false">매매</button>
+            <button class="chip" data-g="deal" data-v="전세" aria-pressed="false">전세</button>
+            <button class="chip" data-g="deal" data-v="월세" aria-pressed="false">월세</button>
+          </div>
+        </div>
+        <div class="frow" role="group" aria-label="매물 유형 고르기">
+          <span class="lab">유형</span>
+          <div class="seg">
+            <button class="chip" data-g="type" data-v="전체" aria-pressed="true">전체</button>
+            <button class="chip" data-g="type" data-v="아파트" aria-pressed="false">아파트</button>
+            <button class="chip" data-g="type" data-v="오피스텔" aria-pressed="false">오피스텔</button>
+            <button class="chip" data-g="type" data-v="상가" aria-pressed="false">상가</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rbar">
+        <span id="count" aria-live="polite"></span>
+        <button class="reset uline" id="reset" type="button">필터 처음으로</button>
+      </div>
+
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" hidden>
+        <p><b>조건에 맞는 매물이 없어요.</b></p>
+        <p>다른 거래·유형을 고르거나 「필터 처음으로」를 눌러 주세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="location">
+    <div class="wrap loc">
+      <div>
+        <p class="kicker">오시는 길</p>
+        <p class="addr">부산광역시 봄길구 예시로,<br>연습빌딩 1층</p>
+        <p class="note">가상 주소예요. 주소는 글로만 안내하고 지도는 연결하지 않아요.</p>
+        <dl class="hours">
+          <div><dt>평일</dt><dd>월~금 09:00~18:00</dd></div>
+          <div><dt>토요일</dt><dd>10:00~15:00</dd></div>
+          <div><dt>일요일</dt><dd>쉬어요</dd></div>
+        </dl>
+        <p class="way">가상 봄길역에서 예시로를 따라 걸어오면 봄길공원 맞은편 연습빌딩 1층이에요.</p>
+        <span class="vtag">가상 위치 · 실제로 찾아갈 수 없어요</span>
+      </div>
+      <div class="sq"><img src="images/hero-neighborhood.png" alt="봄길구 동네 산책로 (AI가 만든 예시 사진)" loading="lazy" width="1672" height="941"></div>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="kicker">문의 안내</p>
+          <h2>궁금한 점은 이렇게 물어봐요</h2>
+          <p class="sub">이 화면은 안내만 해요. 전화 걸기·메일 보내기·문의 전송 기능은 없어요.</p>
+        </div>
+        <span class="vtag">교육용 가상 연락처</span>
+      </div>
+      <div class="contact">
+        <dl class="clist">
+          <div><dt>전화 (가상)</dt><dd>000-0000-0000<small>연결되지 않는 교육용 번호예요.</small></dd></div>
+          <div><dt>이메일 (가상)</dt><dd>hello@bomgil.example.com<small>교육용 예시 주소라 메일을 받지 않아요.</small></dd></div>
+          <div><dt>상담 시간</dt><dd>평일 09:00~18:00<small>토요일 10:00~15:00 · 일요일 쉬어요</small></dd></div>
+        </dl>
+        <div class="prep">
+          <h3>문의 전에 준비하면 좋아요</h3>
+          <ol>
+            <li>관심 있는 매물ID (예: BG-001)</li>
+            <li>원하는 거래 방식(매매·전세·월세)과 예산</li>
+            <li>입주하고 싶은 시기</li>
+            <li>꼭 필요한 조건 (방 수, 층, 역과의 거리)</li>
+          </ol>
+        </div>
+      </div>
+      <p class="warn" role="note">⚠ 봄길부동산은 교육용 가상 업체예요. 위 번호와 주소로 실제 연락하거나 방문할 수 없어요. 실제 부동산 거래는 등록된 공인중개사무소에서 상담하세요.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="big">교육용 가상 자료 · 실제 매물이 아님</p>
+    <p>봄길부동산 (교육용 가상 업체) · 대표 김봄길 (가상 인물) · 부산광역시 봄길구 예시로 (가상 주소)</p>
+    <p class="dim">사진: 모두 AI가 만든 예시 사진이며 실제 매물 사진이 아니에요.</p>
+  </div>
+</footer>
+
+<nav class="phonebar" aria-label="빠른 이동">
+  <a class="btn" href="#listings">매물 보기</a>
+  <a class="btn alt" href="#contact">문의 안내</a>
+</nav>
+
+<script>
+  // 매물목록.csv 9건 (교육용 가상 매물). 파일을 더블클릭해도 열리도록 페이지 안에 넣었어요.
+  const LISTINGS = [
+    { id: "BG-001", name: "봄길 햇살아파트 101동", type: "아파트", deal: "매매", addr: "봄길구 햇살로", area: 84.9, floor: 12, floors: 20, sale: 520000000, deposit: 0, rent: 0, fee: 250000, rooms: 3, baths: 2, movein: "2027년 1월 협의", feature: "남향, 가상 초등학교가 가까워요" },
+    { id: "BG-002", name: "봄길 숲속아파트 203동", type: "아파트", deal: "전세", addr: "봄길구 숲속길", area: 59.9, floor: 7, floors: 15, sale: 0, deposit: 310000000, rent: 0, fee: 180000, rooms: 3, baths: 1, movein: "즉시 입주", feature: "공원 산책길이 가까워요" },
+    { id: "BG-003", name: "봄길 강변아파트 105동", type: "아파트", deal: "월세", addr: "봄길구 강변예시로", area: 74.5, floor: 3, floors: 18, sale: 0, deposit: 50000000, rent: 1100000, fee: 210000, rooms: 3, baths: 2, movein: "2026년 12월", feature: "낮은 층, 엘리베이터 있어요" },
+    { id: "BG-004", name: "봄길 스테이 오피스텔", type: "오피스텔", deal: "월세", addr: "봄길구 예시로", area: 26.4, floor: 9, floors: 14, sale: 0, deposit: 10000000, rent: 650000, fee: 90000, rooms: 1, baths: 1, movein: "즉시 입주", feature: "혼자 살기 좋은 크기예요" },
+    { id: "BG-005", name: "봄길역 리버뷰 오피스텔", type: "오피스텔", deal: "전세", addr: "봄길구 봄길역로", area: 33.1, floor: 11, floors: 20, sale: 0, deposit: 180000000, rent: 0, fee: 110000, rooms: 1, baths: 1, movein: "2027년 2월 협의", feature: "가상 봄길역까지 걸어서 5분" },
+    { id: "BG-006", name: "봄길 센트럴 오피스텔", type: "오피스텔", deal: "매매", addr: "봄길구 봄길중앙로", area: 42.0, floor: 15, floors: 22, sale: 240000000, deposit: 0, rent: 0, fee: 130000, rooms: 2, baths: 1, movein: "즉시 입주", feature: "방 2개, 작은 사무실로도 써요" },
+    { id: "BG-007", name: "봄길시장 앞 1층 상가", type: "상가", deal: "월세", addr: "봄길구 봄길시장길", area: 49.5, floor: 1, floors: 5, sale: 0, deposit: 30000000, rent: 1800000, fee: 150000, rooms: 0, baths: 1, movein: "즉시 입주", feature: "길가 1층, 작은 가게에 알맞아요" },
+    { id: "BG-008", name: "봄길공원 코너 상가", type: "상가", deal: "매매", addr: "봄길구 봄길공원로", area: 66.0, floor: 1, floors: 4, sale: 680000000, deposit: 0, rent: 0, fee: 200000, rooms: 0, baths: 1, movein: "2027년 3월 협의", feature: "모퉁이 자리, 큰 창이 있어요" },
+    { id: "BG-009", name: "봄길 예시로 2층 상가", type: "상가", deal: "월세", addr: "봄길구 예시로", area: 82.6, floor: 2, floors: 3, sale: 0, deposit: 20000000, rent: 900000, fee: 120000, rooms: 0, baths: 1, movein: "즉시 입주", feature: "넓은 2층, 학원·공방에 알맞아요" }
+  ];
+  const IMG = { "아파트": "images/apartment.png", "오피스텔": "images/officetel.png", "상가": "images/shop.png" };
+
+  // 520000000 → "5억 2,000만원"
+  function won(n) {
+    const eok = Math.floor(n / 1e8), man = Math.floor((n % 1e8) / 1e4), out = [];
+    if (eok) out.push(eok + "억");
+    if (man) out.push(man.toLocaleString("ko-KR") + "만");
+    return (out.join(" ") || "0") + "원";
+  }
+  const price = m => m.deal === "매매" ? "매매 " + won(m.sale)
+                   : m.deal === "전세" ? "전세 " + won(m.deposit)
+                   : "월세 " + won(m.deposit) + " / " + won(m.rent);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  const card = m => `
+    <article class="card">
+      <div class="sq">
+        <img src="${IMG[m.type]}" alt="${esc(m.type)} 예시 사진 (AI 생성, 실제 매물 아님)" loading="lazy" width="1536" height="1024">
+        <span class="vtag">교육용 가상 매물</span>
+      </div>
+      <div class="info">
+        <div class="meta"><span class="d d-${m.deal}">${esc(m.deal)}</span><span class="t">${esc(m.type)} · ${esc(m.addr)}</span></div>
+        <h3>${esc(m.name)}</h3>
+        <p class="price">${price(m)}</p>
+        <dl class="specs">
+          <dt>전용면적</dt><dd>${m.area}㎡ (약 ${(m.area / 3.3058).toFixed(1)}평)</dd>
+          <dt>층</dt><dd>${m.floor}층 / 전체 ${m.floors}층</dd>
+          <dt>구성</dt><dd>${m.rooms ? `방 ${m.rooms} · ` : ""}욕실 ${m.baths}</dd>
+          <dt>관리비</dt><dd>월 ${won(m.fee)}</dd>
+          <dt>입주</dt><dd>${esc(m.movein)}</dd>
+        </dl>
+        <p class="feat">${esc(m.feature)}</p>
+        <p class="cid">매물ID ${m.id}</p>
+      </div>
+    </article>`;
+
+  const state = { deal: "전체", type: "전체" };
+  const grid = document.getElementById("grid"), empty = document.getElementById("empty"), count = document.getElementById("count");
+  function render() {
+    const list = LISTINGS.filter(m => (state.deal === "전체" || m.deal === state.deal) && (state.type === "전체" || m.type === state.type));
+    grid.innerHTML = list.map(card).join("");
+    empty.hidden = list.length > 0;
+    const label = [state.deal, state.type].filter(v => v !== "전체").join(" · ") || "전체";
+    count.innerHTML = `<b>${label}</b> 매물 ${list.length}건 / 전체 ${LISTINGS.length}건`;
+    document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", String(state[b.dataset.g] === b.dataset.v)));
+  }
+  document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => { state[b.dataset.g] = b.dataset.v; render(); }));
+  document.getElementById("reset").addEventListener("click", () => { state.deal = state.type = "전체"; render(); });
+  render();
+
+  // 휴대폰 전체 화면 메뉴
+  const menu = document.getElementById("menu"), openBtn = document.getElementById("menuOpen");
+  const setMenu = on => { menu.classList.toggle("open", on); openBtn.setAttribute("aria-expanded", String(on)); document.body.style.overflow = on ? "hidden" : ""; };
+  openBtn.addEventListener("click", () => setMenu(true));
+  document.getElementById("menuClose").addEventListener("click", () => setMenu(false));
+  menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+</script>
+</body>
+</html>
